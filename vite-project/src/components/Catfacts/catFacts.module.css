@@ -1,29 +1,32 @@
-* {
+:global(*) {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
 }
 
-body {
+:global(body) {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
   background-color: #1f618d;
 }
 
 .container {
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
+  position: relative;
 }
 
 .fact {
-  position: absolute;
-  top: 100px;
-  right: 180px;
-  min-width: 120px;
-  min-height: 50px;
-  max-width: 280px;
-  width: max-content;
+  position: relative;
+  width: 280px;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   background: #facc15;
   color: #000000;
   border: 4px solid #000000;
@@ -31,26 +34,21 @@ body {
   border-radius: 30px;
   font-family: "Impact", sans-serif;
   box-shadow: 6px 6px 0px #000000;
-  transition: width 0.2s ease, height 0.2s ease;
+  margin-left: 30px;
+  overflow: hidden;
 }
 
 .fact::after {
   content: "";
   position: absolute;
-  bottom: -12px;
-  left: -12px;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 0;
   height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
   border-right: 20px solid #000000;
-  border-left: none;
-  transform: rotate(-35deg);
-  filter: drop-shadow(-3px 3px 0px #000000);
-}
-
-.error {
-  color: #c0392b;
 }
 
 .loading {
@@ -59,21 +57,25 @@ body {
   font-size: 30px;
   animation: l1 1s linear infinite alternate;
 }
-.loading:before {
+.loading::after {
   content: "Loading...";
 }
+
+.error {
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 30px;
+  animation: l1 1s linear infinite alternate;
+}
+
 @keyframes l1 {
   to {
-    opacity: 0;
+    color: red;
   }
 }
 
 .img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 400px;
-  height: 400px;
+  height: auto;
   cursor: pointer;
-  bottom: 200px;
 }

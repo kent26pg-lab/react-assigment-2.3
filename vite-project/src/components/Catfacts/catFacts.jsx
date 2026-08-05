@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import styles from "./CatFacts.module.css";
+import styles from "./catFacts.module.css";
 
 function CatFacts() {
   const [loading, setLoading] = useState(false);
@@ -9,7 +9,6 @@ function CatFacts() {
 
   useEffect(() => {
     if (clickCount === 0) return;
-    console.log(clickCount)
 
     const fetchFacts = async () => {
       setLoading(true);
@@ -35,17 +34,15 @@ function CatFacts() {
 
   return (
     <div className={styles.container}>
-      {error ? (
-        <p className={styles.error}>Error: {error}</p>
-      ) : (
-        <div className={styles.fact}>
-          {loading ? (
-            <div className={styles.loading}></div>
-          ) : (
-            <p>{facts.fact}</p>
-          )}
-        </div>
-      )}
+      <div className={styles.fact}>
+        {loading ? (
+          <div className={styles.loading}></div>
+        ) : error ? (
+          <p className={styles.error}>Error: {error}</p>
+        ) : (
+          <p>{facts.fact}</p>
+        )}
+      </div>
 
       <img
         src="Garfield.png"
