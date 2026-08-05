@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import styles from "./CatFacts.module.css"
 
 function CatFacts() {
   const [loading, setLoading] = useState(true);
@@ -10,7 +11,7 @@ function CatFacts() {
     setError(null);
     try {
       const response = await fetch("https://catfact.ninja/fact", {
-        cache: "no-store",
+    
       });
 
       if (!response.ok) {
@@ -31,12 +32,14 @@ function CatFacts() {
   }, []);
 
   return (
-    <div>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      {!loading && !error && <p>{facts.fact}</p>}
-      <button onClick={fetchFacts}>Get new fact</button>
-    </div>
+    <div className={styles.container}>
+    {loading && <p>Loading...</p>}
+    {error && <p className={styles.error}>Error: {error}</p>}
+    {!loading && !error && <p className={styles.fact}>{facts.fact}</p>}
+    <button className={styles.button} onClick={fetchFacts}>
+      Get new fact
+    </button>
+  </div>
   );
 }
 

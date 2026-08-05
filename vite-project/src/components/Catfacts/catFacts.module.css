@@ -1,0 +1,32 @@
+.container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.fact {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 1rem 0;
+}
+
+.error {
+  color: #c0392b;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #2980b9;
+  color: white;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #1f618d;
+}
