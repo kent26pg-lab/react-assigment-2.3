@@ -13,15 +13,13 @@ body {
 
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
 }
 
 .fact {
   position: absolute;
-  bottom: 180px;
-  
-  top: auto;
-  right: auto;
+  top: 100px;
+  right: 180px;
   min-width: 120px;
   min-height: 50px;
   max-width: 280px;
@@ -45,7 +43,7 @@ body {
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 20px solid #facc15;
+  border-right: 20px solid #000000;
   border-left: none;
   transform: rotate(-35deg);
   filter: drop-shadow(-3px 3px 0px #000000);
@@ -77,4 +75,5 @@ body {
   width: 400px;
   height: 400px;
   cursor: pointer;
+  bottom: 200px;
 }
