@@ -33,12 +33,10 @@ function CatFacts() {
 
   return (
     <div className={styles.container}>
-    {loading && <p>Loading...</p>}
+    {loading && <p>Loading... </p> }
     {error && <p className={styles.error}>Error: {error}</p>}
     {!loading && !error && <p className={styles.fact}>{facts.fact}</p>}
-    <button className={styles.button} onClick={fetchFacts}>
-      Get new fact
-    </button>
+    <img src="Garfield.png" alt="Picture of a cat" className={styles.img} onClick={fetchFacts}/>
   </div>
   );
 }
