@@ -79,3 +79,25 @@
   height: auto;
   cursor: pointer;
 }
+
+.dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #000000;
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+}
+
+.dotActive {
+  opacity: 1;
+  background-color: #facc15;
+  border: 2px solid #000000;
+}
