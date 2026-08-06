@@ -4,7 +4,7 @@ import styles from "./catFacts.module.css";
 function CatFacts() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [facts, setFacts] = useState({ fact: "Trykk på meg for katte fakta" });
+  const [facts, setFacts] = useState({ fact: "Click on me for facts about cats!"});
   const [clickCount, setClickCount] = useState(0);
 
   useEffect(() => {
