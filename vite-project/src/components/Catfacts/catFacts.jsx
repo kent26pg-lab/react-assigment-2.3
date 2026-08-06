@@ -56,43 +56,45 @@ function CatFacts() {
 
   return (
     <div className={styles.container}>
-      <img
-        src="Garfield.png"
-        alt="Picture of a cat"
-        className={styles.img}
-        onClick={handleImageClick}
-      />
+  <img
+    src="Garfield.png"
+    alt="Picture of a cat"
+    className={styles.img}
+    onClick={handleImageClick}
+  />
 
-      <div className={styles.fact}>
-        {loading && <p className={styles.loading}></p>}
-        {error && <p className={styles.error}>Error: {error}</p>}
+  <div className={styles.factWrapper}>
+    <div className={styles.fact}>
+      {loading && <p className={styles.loading}></p>}
+      {error && <p className={styles.error}>Error: {error}</p>}
 
-        {!loading && !error && phase === "idle" && (
-          <p>Click on me for 5 cat facts!</p>
-        )}
-
-        {!loading && !error && phase === "showing" && (
-          <p>{facts[currentIndex]?.fact}</p>
-        )}
-
-        {!loading && !error && phase === "asking" && (
-          <p>Want 5 more? Click for more!</p>
-        )}
-      </div>
+      {!loading && !error && phase === "idle" && (
+        <p>Click on me for 5 cat facts!</p>
+      )}
 
       {!loading && !error && phase === "showing" && (
-        <div className={styles.dots}>
-          {facts.map((_, index) => (
-            <span
-              key={index}
-              className={`${styles.dot} ${
-                index === currentIndex ? styles.dotActive : ""
-              }`}
-            />
-          ))}
-        </div>
+        <p>{facts[currentIndex]?.fact}</p>
+      )}
+
+      {!loading && !error && phase === "asking" && (
+        <p>Want 5 more? Click for more!</p>
       )}
     </div>
+
+    {!loading && !error && phase === "showing" && (
+      <div className={styles.dots}>
+        {facts.map((_, index) => (
+          <span
+            key={index}
+            className={`${styles.dot} ${
+              index === currentIndex ? styles.dotActive : ""
+            }`}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+</div>
   );
 }
 
