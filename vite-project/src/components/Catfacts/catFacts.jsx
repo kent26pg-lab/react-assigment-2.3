@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "./catFacts.module.css";
 
 function CatFacts() {
-  const [phase, setPhase] = useState("idle");
+  const [phase, setPhase] = useState("idle"); // "idle" | "showing" | "asking"
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [facts, setFacts] = useState([]);
@@ -33,7 +33,7 @@ function CatFacts() {
     }
   }, []);
 
-  const handleImageClick = () => {
+  const handleImageClick = useCallback(() => {
     if (loading) return;
 
     if (phase === "idle") {
@@ -52,49 +52,60 @@ function CatFacts() {
     } else {
       setCurrentIndex((prev) => prev + 1);
     }
-  };
+  }, [loading, phase, currentIndex, facts, fetchFacts]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        handleImageClick();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleImageClick]);
 
   return (
     <div className={styles.container}>
-  <img
-    src="Garfield.png"
-    alt="Picture of a cat"
-    className={styles.img}
-    onClick={handleImageClick}
-  />
+      <img
+        src="Garfield.png"
+        alt="Picture of a cat"
+        className={styles.img}
+        onClick={handleImageClick}
+      />
 
-  <div className={styles.factWrapper}>
-    <div className={styles.fact}>
-      {loading && <p className={styles.loading}></p>}
-      {error && <p className={styles.error}>Error: {error}</p>}
+      <div className={styles.factWrapper}>
+        <div className={styles.fact}>
+          {loading && <p className={styles.loading}></p>}
+          {error && <p className={styles.error}>Error: {error}</p>}
 
-      {!loading && !error && phase === "idle" && (
-        <p>Click on me for 5 cat facts!</p>
-      )}
+          {!loading && !error && phase === "idle" && (
+            <p>Click on me for 5 cat facts!</p>
+          )}
 
-      {!loading && !error && phase === "showing" && (
-        <p>{facts[currentIndex]?.fact}</p>
-      )}
+          {!loading && !error && phase === "showing" && (
+            <p>{facts[currentIndex]?.fact}</p>
+          )}
 
-      {!loading && !error && phase === "asking" && (
-        <p>Want 5 more? Click for more!</p>
-      )}
-    </div>
+          {!loading && !error && phase === "asking" && (
+            <p>Want 5 more? Click for more!</p>
+          )}
+        </div>
 
-    {!loading && !error && phase === "showing" && (
-      <div className={styles.dots}>
-        {facts.map((_, index) => (
-          <span
-            key={index}
-            className={`${styles.dot} ${
-              index === currentIndex ? styles.dotActive : ""
-            }`}
-          />
-        ))}
+        {!loading && !error && phase === "showing" && (
+          <div className={styles.dots}>
+            {facts.map((_, index) => (
+              <span
+                key={index}
+                className={`${styles.dot} ${
+                  index === currentIndex ? styles.dotActive : ""
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
-    )}
-  </div>
-</div>
+    </div>
   );
 }
 
