@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import styles from "./catFacts.module.css";
 
 function CatFacts() {
-  const [phase, setPhase] = useState("idle"); // "idle" | "showing" | "asking"
+  const [started, setStarted] = useState(false);
+  const [phase, setPhase] = useState("idle");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [facts, setFacts] = useState([]);
@@ -33,13 +34,17 @@ function CatFacts() {
     }
   }, []);
 
-  const handleImageClick = useCallback(() => {
-    if (loading) return;
+  useEffect(() => {
+    fetchFacts();
+  }, [fetchFacts]);
 
-    if (phase === "idle") {
-      fetchFacts();
+  const handleImageClick = useCallback(() => {
+    if (!started) {
+      setStarted(true);
       return;
     }
+
+    if (loading) return;
 
     if (phase === "asking") {
       fetchFacts();
@@ -52,7 +57,7 @@ function CatFacts() {
     } else {
       setCurrentIndex((prev) => prev + 1);
     }
-  }, [loading, phase, currentIndex, facts, fetchFacts]);
+  }, [started, loading, phase, currentIndex, facts, fetchFacts]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -76,23 +81,23 @@ function CatFacts() {
 
       <div className={styles.factWrapper}>
         <div className={styles.fact}>
-          {loading && <p className={styles.loading}></p>}
-          {error && <p className={styles.error}>Error: {error}</p>}
+          {!started && <p>Click on me or hit enter for 5 cat facts!</p>}
 
-          {!loading && !error && phase === "idle" && (
-            <p>Click on me for 5 cat facts!</p>
+          {started && loading && <p className={styles.loading}></p>}
+          {started && !loading && error && (
+            <p className={styles.error}>Error: {error}</p>
           )}
 
-          {!loading && !error && phase === "showing" && (
+          {started && !loading && !error && phase === "showing" && (
             <p>{facts[currentIndex]?.fact}</p>
           )}
 
-          {!loading && !error && phase === "asking" && (
-            <p>Want 5 more? Click for more!</p>
+          {started && !loading && !error && phase === "asking" && (
+            <p>Want 5 more? Click on me or hit Enter!</p>
           )}
         </div>
 
-        {!loading && !error && phase === "showing" && (
+        {started && !loading && !error && phase === "showing" && (
           <div className={styles.dots}>
             {facts.map((_, index) => (
               <span
