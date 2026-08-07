@@ -61,7 +61,7 @@ function CatFacts() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && !e.repeat) {
         handleImageClick();
       }
     };
