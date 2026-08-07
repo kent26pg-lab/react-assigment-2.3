@@ -3,7 +3,7 @@ import styles from "./catFacts.module.css";
 
 function CatFacts() {
   const [started, setStarted] = useState(false);
-  const [phase, setPhase] = useState("idle");
+  const [isAsking, setIsAsking] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [facts, setFacts] = useState([]);
@@ -26,7 +26,7 @@ function CatFacts() {
       const data = await response.json();
       setFacts(data.data);
       setCurrentIndex(0);
-      setPhase("showing");
+      setIsAsking(false);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -46,18 +46,18 @@ function CatFacts() {
 
     if (loading) return;
 
-    if (phase === "asking") {
+    if (isAsking) {
       fetchFacts();
       return;
     }
 
     const isLastFact = currentIndex === facts.length - 1;
     if (isLastFact) {
-      setPhase("asking");
+      setIsAsking(true);
     } else {
       setCurrentIndex((prev) => prev + 1);
     }
-  }, [started, loading, phase, currentIndex, facts, fetchFacts]);
+  }, [started, loading, isAsking, currentIndex, facts, fetchFacts]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -81,23 +81,23 @@ function CatFacts() {
 
       <div className={styles.factWrapper}>
         <div className={styles.fact}>
-          {!started && <p>Click on me or hit enter for 5 cat facts!</p>}
+          {!started && <p>Click on me for 5 cat facts!</p>}
 
           {started && loading && <p className={styles.loading}></p>}
           {started && !loading && error && (
             <p className={styles.error}>Error: {error}</p>
           )}
 
-          {started && !loading && !error && phase === "showing" && (
+          {started && !loading && !error && !isAsking && (
             <p>{facts[currentIndex]?.fact}</p>
           )}
 
-          {started && !loading && !error && phase === "asking" && (
-            <p>Want 5 more? Click on me or hit Enter!</p>
+          {started && !loading && !error && isAsking && (
+            <p>Want 5 more? Click for more!</p>
           )}
         </div>
 
-        {started && !loading && !error && phase === "showing" && (
+        {started && !loading && !error && !isAsking && (
           <div className={styles.dots}>
             {facts.map((_, index) => (
               <span
