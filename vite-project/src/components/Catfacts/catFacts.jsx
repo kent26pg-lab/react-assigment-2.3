@@ -81,7 +81,7 @@ function CatFacts() {
 
       <div className={styles.factWrapper}>
         <div className={styles.fact}>
-          {!started && <p>Click on me for 5 cat facts!</p>}
+          {!started && <p>Click on me or hit Enter for 5 cat facts!</p>}
 
           {started && loading && <p className={styles.loading}></p>}
           {started && !loading && error && (
@@ -93,7 +93,7 @@ function CatFacts() {
           )}
 
           {started && !loading && !error && isAsking && (
-            <p>Want 5 more? Click for more!</p>
+            <p>Want 5 more? Click on me or hit Enter!</p>
           )}
         </div>
 
