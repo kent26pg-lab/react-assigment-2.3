@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import styles from "./catFacts.module.css";
+import CatImage from "./CatImage";
+import FactDisplay from "./FactDisplay";
+import DotsIndicator from "./DotsIndicator";
 
 function CatFacts() {
   const [started, setStarted] = useState(false);
@@ -72,42 +75,19 @@ function CatFacts() {
 
   return (
     <div className={styles.container}>
-      <img
-        src="Garfield.png"
-        alt="Picture of a cat"
-        className={styles.img}
-        onClick={handleImageClick}
-      />
+      <CatImage onClick={handleImageClick} />
 
       <div className={styles.factWrapper}>
-        <div className={styles.fact}>
-          {!started && <p>Click on me or hit Enter for 5 cat facts!</p>}
-
-          {started && loading && <p className={styles.loading}></p>}
-          {started && !loading && error && (
-            <p className={styles.error}>Error: {error}</p>
-          )}
-
-          {started && !loading && !error && !isAsking && (
-            <p>{facts[currentIndex]?.fact}</p>
-          )}
-
-          {started && !loading && !error && isAsking && (
-            <p>Want 5 more? Click on me or hit Enter!</p>
-          )}
-        </div>
+        <FactDisplay
+          started={started}
+          loading={loading}
+          error={error}
+          isAsking={isAsking}
+          fact={facts[currentIndex]?.fact}
+        />
 
         {started && !loading && !error && !isAsking && (
-          <div className={styles.dots}>
-            {facts.map((_, index) => (
-              <span
-                key={index}
-                className={`${styles.dot} ${
-                  index === currentIndex ? styles.dotActive : ""
-                }`}
-              />
-            ))}
-          </div>
+          <DotsIndicator count={facts.length} currentIndex={currentIndex} />
         )}
       </div>
     </div>
